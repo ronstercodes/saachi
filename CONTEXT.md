@@ -19,6 +19,20 @@ From the NHD website rule summary:
 - Code doesn't count toward the word limit.
 - Check the current NHD Rule Book and ask the teacher or contest coordinator about outside code and AI use.
 
+## Teacher approval (2026-10-25)
+
+The teacher was asked about Rule 10 (Reasonable Help) and approved both of these, on the condition that each is credited:
+- **Open source components and libraries** (everything listed in the Summary table of `SOURCES.md`).
+- **AI help with the code** (Claude, by Anthropic), with a citation saying the AI tool helped with the code.
+
+AI help covers code only. The research, text, captions and images stay the student's own. Keep a copy of the teacher's reply (screenshot or email) with the project files in case a judge asks.
+
+### Citing it in the annotated bibliography
+
+Write the annotation under each entry in your own words.
+- **AI tool:** Anthropic. *Claude*. AI assistant. Used October 2026 to help find, adapt and assemble the HTML and CSS for the website's home page design. https://claude.ai
+- **Code sources:** one entry for each project in the Summary table of `SOURCES.md` (Bootstrap, Uiverse.io galaxy, vanilla-tilt.js, ScrollOut, countUp.js), giving the author, name, version, license and GitHub link shown there.
+
 ## How the NHD editor works
 
 - It's built on **GrapesJS** (drag and drop) and loads **Bootstrap 4.3.1**, jQuery and Font Awesome on every page.
