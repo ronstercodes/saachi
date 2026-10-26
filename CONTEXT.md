@@ -53,7 +53,7 @@ Write the annotation under each entry in your own words.
 
 ## Page structure (home.html)
 
-Plain editor blocks, each styled by its own id in `home.css`, top to bottom: nav tag, title band (`#itsa`, `#i2k2s`), slideshow (`#isl1`, the editor's own carousel and script) with caption, intro text (`#ihq6k`) beside the 13 box (`#ipwhb`), image with heading and text (`#ir7ld`), three picture cards (`#ilv6g`), quote (`#ix0cr`), and the Thesis button (`#irtjk`, links to `thesis_4`).
+Built only from the editor's own blocks, each styled by its own id in `home.css`, top to bottom: nav tag; framed title band (`#itsa`, `#i2k2s`); slideshow in a shadowed frame (`#isl1`, the editor's own carousel and script) with caption; intro text beside the tilted 13 box (`#ihq6k`, `#ipwhb`, 7/3 columns); navy timeline band with three `[Year]` cards (3 columns); feature image beside a Section Header & Text block (2 columns); three picture cards (3 columns); oxblood quote band; Thesis button (`#irtjk`, links to `thesis_4`). Hover effects use the style panel's hover state with rotate, scale and shadow.
 
 ## Content rules
 
@@ -63,6 +63,7 @@ Plain editor blocks, each styled by its own id in `home.css`, top to bottom: nav
 
 ## Files in docs/ and archive/
 
+- `docs/editor-capabilities-log.md`: every block and style option the editor has, and the exact code each block adds.
 - `docs/images/`: screenshots of the editor and the Import button.
 - `archive/nhd-web-editor-instructions.md`: the first instruction file for writing NHD editor code (superseded by `EDITOR-FORMAT.md`).
 - `archive/sourced-version/`: the earlier version built only from copied Bootstrap and Uiverse code, with its source log and checker.

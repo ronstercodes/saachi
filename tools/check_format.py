@@ -14,19 +14,37 @@ HTML = open(os.path.join(ROOT, "home.html"), encoding="utf-8").read()
 CSS = open(os.path.join(ROOT, "home.css"), encoding="utf-8").read()
 SCRIPT = open(os.path.join(ROOT, "original-export", "carousel-script.js"), encoding="utf-8").read()
 
-# Classes the editor itself puts on the page (from the original export).
-ALLOWED_CLASSES = {"auto-nav", "container", "c1363", "carousel", "slide"}
-# Class selectors from the original export's CSS.
-ALLOWED_CLASS_SELECTORS = {".c1363", ".slide", ".container.c1363", ".auto-nav"}
+# Everything below comes from docs/editor-capabilities-log.md (read from the editor itself).
+# Classes the editor's own blocks and the original page put on elements.
+ALLOWED_CLASSES = {"auto-nav", "container", "c1363", "carousel", "slide",
+                   "rowx", "col-md-3", "col-md-4", "col-md-6", "col-md-8",
+                   "bdg-sect", "heading", "paragraph", "row", "cell"}
+# Class rules from the original export and the Flexbox block.
+ALLOWED_CLASS_SELECTORS = {".c1363", ".slide", ".container.c1363", ".auto-nav", ".row", ".cell"}
+# Properties the style panel can set, plus the ones the blocks and original page start with.
+PANEL_PROPS = set("""display position top right bottom left text-align
+font-family font-size font-weight letter-spacing color line-height text-decoration text-shadow
+width flex-basis height max-width min-height margin margin-top margin-right margin-bottom margin-left
+padding padding-top padding-right padding-bottom padding-left
+opacity background-color border-radius border-top-left-radius border-top-right-radius
+border-bottom-right-radius border-bottom-left-radius border border-width border-style border-color
+box-shadow background background-image background-repeat background-position background-attachment background-size
+transition transition-property transition-duration transition-timing-function perspective transform
+flex-direction justify-content align-items order flex flex-grow flex-shrink align-self vertical-align
+min-width""".split())
+BLOCK_ONLY_PROPS = {"flex-wrap"}  # only allowed in the Flexbox block's own .row / .cell rules
+FONTS = {"arial", "arial black", "brush script mt", "comic sans ms", "courier new", "georgia", "helvetica",
+         "impact", "lucida sans unicode", "tahoma", "times new roman", "trebuchet ms", "verdana",
+         "serif", "sans-serif", "monospace", "cursive"}
 ALLOWED_TAG_SELECTORS = {"body"}
 # Editor-style ids: "i" followed by 3 to 5 lowercase letters or digits.
 ID_RE = re.compile(r"^i[a-z0-9]{3,5}$")
 # The editor's device presets.
 ALLOWED_MEDIA = {"(max-width: 992px)", "(max-width: 768px)", "(max-width: 480px)"}
 # Style panel can set transition and transform (Extra section) but not keyframe animations.
-BANNED_CSS = ["@keyframes", "animation", "var(", "!important", "@import", "url(http", "::"]
-ALLOWED_TAGS = {"div", "p", "h1", "h2", "h3", "h4", "h5", "h6", "strong", "em", "br", "a", "img",
-                "span", "ul", "ol", "li", "blockquote", "script", "table", "tr", "td", "th", "tbody", "thead"}
+BANNED_CSS = ["@keyframes", "animation", "var(", "!important", "@import", "url(http", "::", "gradient(", "translate"]
+ALLOWED_TAGS = {"div", "section", "p", "h1", "h2", "h3", "h4", "h5", "h6", "strong", "b", "i", "em", "u", "br", "hr",
+                "a", "img", "span", "ul", "ol", "li", "blockquote", "script"}
 
 errors = []
 
@@ -115,12 +133,26 @@ for ctx, sel, inner in rules(CSS, None):
     if "," in sel:
         errors.append(f"home.css: '{sel}' groups selectors; the editor writes one rule per element")
         continue
-    m = re.match(r"^#([a-z0-9]+)(:hover)?$", sel)
+    m = re.match(r"^#([a-z0-9]+)(:hover|:active|:nth-of-type\(2n\))?$", sel)
     if m:
         if m.group(1) not in ids:
             errors.append(f"home.css: '{sel}' styles an id that isn't in home.html")
     elif sel not in ALLOWED_CLASS_SELECTORS | ALLOWED_TAG_SELECTORS:
         errors.append(f"home.css: selector '{sel}' isn't editor style; use #id or #id:hover")
+    for prop, val in re.findall(r"([a-z-]+)\s*:\s*([^;]+)", inner):
+        if prop in BLOCK_ONLY_PROPS and sel in {".row", ".cell"}:
+            continue
+        if prop not in PANEL_PROPS:
+            errors.append(f"home.css: '{sel}' sets '{prop}', which the editor's style panel can't set")
+            continue
+        if prop == "font-family":
+            for f in val.split(","):
+                if f.strip().strip("'\"").lower() not in FONTS:
+                    errors.append(f"home.css: font '{f.strip()}' isn't in the editor's font list")
+        if prop == "transform" and re.sub(r"(rotate[XYZ]?|scale[XYZ]?)\([^)]*\)|\s|none", "", val):
+            errors.append(f"home.css: '{sel}' transform '{val}' uses more than rotate and scale")
+        elif prop.startswith("border") and prop not in {"border", "border-width", "border-style", "border-color"} and "radius" not in prop:
+            errors.append(f"home.css: '{sel}' sets a single-side border; the panel only sets all four sides")
     for name in re.findall(r"rgba?\(|hsla?\(", inner):
         errors.append(f"home.css: '{sel}' uses {name}; write colors as hex codes")
 for (ctx, sel), n in seen.items():
