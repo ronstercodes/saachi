@@ -34,6 +34,7 @@ Every line of site code in `home.html` and `home.css` sits inside an `@source` b
 | EX-SCROLLOUT | ScrollOut guide (CSS and usage examples) | [scroll-out/scroll-out.github.io](https://github.com/scroll-out/scroll-out.github.io) | `e9543680a3` | MIT | Starting ScrollOut and the fade CSS for [data-scroll] | 3 css rules, 1 html elements, 1 scripts |
 | JS-COUNTUP | countUp.js (UMD build) | [inorganik/countUp.js](https://github.com/inorganik/countUp.js) | 2.10.1, `a477320560` | MIT | Counting number | 1 html elements, 1 scripts |
 | EX-COUNTUP | countUp.js README usage examples | [inorganik/countUp.js](https://github.com/inorganik/countUp.js) | 2.10.1, `a477320560` | MIT | Starting the count on the 13 | 1 html elements, 1 scripts |
+| AI | Small additions written with AI help (Claude, Anthropic), approved by the teacher 2026-10-25 | n/a | n/a | credit required | Glue code too small or specific to source from GitHub | not used |
 
 ## Details
 
@@ -388,6 +389,12 @@ Every line of site code in `home.html` and `home.css` sits inside an `@source` b
 - Used for: Starting the count on the 13
 - Changes made:
   - UMD usage example with target fmCount, end value 13, and the documented autoAnimate, autoAnimateOnce and duration options
+
+### AI: AI-assisted additions
+
+- Written with Claude (Anthropic). Credit it in the annotated bibliography (see `CONTEXT.md`).
+- Limits enforced by the checker: at most 25 CSS rules, 15 HTML elements, 0 scripts, and 6 declarations per rule, so every AI line could be typed by hand.
+- Marked in the code with `@source AI` ... `@end AI`.
 
 ## Not site code
 

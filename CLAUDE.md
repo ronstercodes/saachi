@@ -1,6 +1,6 @@
 # Instructions for AI assistants
 
-**Do not write any new site code.** Read `CODE-SOURCING-RULES.md` first and follow it exactly.
+**Copy, don't write.** Read `CODE-SOURCING-RULES.md` first and follow it exactly. The only new code allowed is small, hand-typeable AI glue inside `@source AI` blocks, within the limits in that file.
 
 Before changing anything in this repository, read these files in order:
 

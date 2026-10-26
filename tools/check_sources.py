@@ -43,6 +43,12 @@ JS_WORDS = set(
 )
 COLOR_PROPS = {"color", "background-color", "border-color", "outline-color", "fill", "stroke"}
 
+# Small AI-written additions, allowed by the teacher on 2026-10-25 if credited.
+# They must stay small enough to type by hand: no scripts, few declarations per rule.
+AI_ID = "AI"
+AI_LIMITS = {"css rules": 25, "html elements": 15, "scripts": 0}
+AI_MAX_DECLS = 6
+
 
 # ---------------------------------------------------------------- upstream ---
 
@@ -216,7 +222,7 @@ class PageParser(HTMLParser):
             return
         kind, sid = m.groups()
         if kind == "source":
-            if sid not in self.ups:
+            if sid not in self.ups and sid != AI_ID:
                 self.rep.err(self.where(), f"unknown source id {sid}")
             self.stack.append(sid)
         else:
@@ -230,6 +236,14 @@ class PageParser(HTMLParser):
             self.script = {"line": self.getpos()[0], "text": "", "src": self.stack[-1] if self.stack else None}
         if not self.stack:
             self.rep.err(self.where(), f"<{tag}> is not inside any @source block")
+            return
+        if self.stack[-1] == AI_ID:
+            self.rep.usage[AI_ID]["html elements"] += 1
+            for name, val in attrs:
+                if name == "class" and val:
+                    for c in val.split():
+                        if c not in self.class_pool:
+                            self.rep.err(self.where(), f"class '{c}' is not defined in home.css, Bootstrap, or any source")
             return
         open_ids = [s for s in self.stack if s in self.ups]
         if not open_ids:
@@ -268,6 +282,9 @@ def strip_js_strings(js):
 def check_script(script, ups, rep):
     where = f"home.html line {script['line']}"
     sid = script["src"]
+    if sid == AI_ID:
+        rep.usage[AI_ID]["scripts"] += 1
+        return
     if sid not in ups:
         rep.err(where, "<script> is not inside a registered @source block")
         return
@@ -315,6 +332,16 @@ def check_css(ups, rep):
             if d.lower_name in COLOR_PROPS and "var(" in tinycss2.serialize(d.value):
                 rep.err(line(n), f"'{sel}' uses var() in {d.lower_name}; the NHD editor turns this black")
 
+    def check_ai_rule(n):
+        sel = tinycss2.serialize(n.prelude).strip()
+        rep.usage[AI_ID]["css rules"] += 1
+        ds = decls(n.content)
+        if len(ds) > AI_MAX_DECLS:
+            rep.err(line(n), f"AI rule '{sel}' has {len(ds)} declarations; keep AI rules to {AI_MAX_DECLS} or fewer")
+        for d in ds:
+            if d.lower_name in COLOR_PROPS and "var(" in tinycss2.serialize(d.value):
+                rep.err(line(n), f"'{sel}' uses var() in {d.lower_name}; the NHD editor turns this black")
+
     for n in nodes:
         if n.type == "comment":
             m = MARK_RE.match(n.value)
@@ -322,7 +349,7 @@ def check_css(ups, rep):
                 continue
             kind, sid = m.groups()
             if kind == "source":
-                if sid not in ups:
+                if sid not in ups and sid != AI_ID:
                     rep.err(line(n), f"unknown source id {sid}")
                 stack.append(sid)
             elif not stack or stack[-1] != sid:
@@ -332,6 +359,16 @@ def check_css(ups, rep):
             continue
         if n.type == "error":
             rep.err(line(n), f"CSS parse error: {n.message}")
+            continue
+        if stack and stack[-1] == AI_ID:
+            if n.type == "qualified-rule":
+                check_ai_rule(n)
+            elif n.type == "at-rule" and n.lower_at_keyword == "media":
+                for r in tinycss2.parse_rule_list(n.content, skip_comments=True, skip_whitespace=True):
+                    if r.type == "qualified-rule":
+                        check_ai_rule(r)
+            else:
+                rep.err(line(n), "only plain rules and @media are allowed in AI blocks")
             continue
         if not stack or stack[-1] not in ups:
             rep.err(line(n), "CSS is not inside a registered @source block")
@@ -385,6 +422,10 @@ def render_log(reg, rep):
         ver = (e.get("version") + ", " if e.get("version") else "") + f"`{e['commit'][:10]}`"
         out.append(f"| {e['id']} | {e['name']} | [{e['repo']}](https://github.com/{e['repo']}) | {ver} | "
                    f"{e['license']} | {e['used_for']} | {used} |")
+    ai = rep.usage.get(AI_ID, Counter())
+    out.append(f"| {AI_ID} | Small additions written with AI help (Claude, Anthropic), approved by the teacher 2026-10-25 | "
+               f"n/a | n/a | credit required | Glue code too small or specific to source from GitHub | "
+               f"{', '.join(f'{v} {k}' for k, v in sorted(ai.items())) or 'not used'} |")
     out += ["", "## Details", ""]
     for e in reg["sources"]:
         url = f"https://github.com/{e['repo']}/blob/{e['commit']}/{e['path']}"
@@ -401,6 +442,12 @@ def render_log(reg, rep):
             out.append("- Changes made:")
             out += [f"  - {c}" for c in e["changes"]]
         out.append("")
+    out += [f"### {AI_ID}: AI-assisted additions", "",
+            "- Written with Claude (Anthropic). Credit it in the annotated bibliography (see `CONTEXT.md`).",
+            f"- Limits enforced by the checker: at most {AI_LIMITS['css rules']} CSS rules, "
+            f"{AI_LIMITS['html elements']} HTML elements, {AI_LIMITS['scripts']} scripts, "
+            f"and {AI_MAX_DECLS} declarations per rule, so every AI line could be typed by hand.",
+            "- Marked in the code with `@source AI` ... `@end AI`.", ""]
     out += ["## Not site code", ""]
     out += [f"- {x}" for x in reg.get("infrastructure", [])]
     out += ["", "## Requests with no source found", ""]
@@ -427,6 +474,11 @@ def main(argv):
     p.close()
     if p.stack:
         rep.err("home.html", f"unclosed @source block(s): {', '.join(p.stack)}")
+
+    for k, limit in AI_LIMITS.items():
+        used = rep.usage.get(AI_ID, Counter())[k]
+        if used > limit:
+            rep.err("AI blocks", f"{used} {k} written with AI; the limit is {limit}")
 
     log = render_log(reg, rep)
     if "--write-log" in argv:

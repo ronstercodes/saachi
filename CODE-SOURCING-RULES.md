@@ -6,6 +6,17 @@
 
 No site code is written from scratch: every line of `home.html` and `home.css` is copied from a registered GitHub source, changed only in the ways listed below, logged, and checked by the screening tool before it is committed.
 
+## Exception: small AI-written glue (approved 2026-10-25)
+
+The teacher approved AI help with the code as long as it is credited (see `CONTEXT.md`). Copied code is still the default. When something truly can't be sourced, a **small** AI-written piece is allowed if:
+
+- it is wrapped in `/* @source AI */ ... /* @end AI */` in `home.css` or `<!-- @source AI -->...<!-- @end AI -->` in `home.html`;
+- it is simple enough to type by hand: plain CSS rules of **6 declarations or fewer**, plain HTML, and **no JavaScript**;
+- the page stays under the totals the checker enforces (**25 CSS rules and 15 HTML elements** written with AI);
+- it is still scoped under `#fm`, uses hex colors, and follows `DESIGN.md`.
+
+Prefer arranging copied pieces in the editor (dragging, reordering, editing text and styles there) over writing anything new.
+
 ## 1. Where code may come from
 
 - **Only from a public GitHub repository of UI/UX code** (HTML, CSS or JavaScript, or the documentation examples inside such a repo), copied from one specific file at one specific commit.
