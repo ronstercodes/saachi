@@ -1,0 +1,10 @@
+#!/bin/sh
+# Blocks a commit if the source screen fails.
+# Turn on once per clone with:  git config core.hooksPath tools/hooks
+python3 tools/check_sources.py --check-log || {
+  echo ""
+  echo "Commit blocked: fix the problems above, or run"
+  echo "  python3 tools/check_sources.py --write-log"
+  echo "if you only changed sources/registry.json."
+  exit 1
+}

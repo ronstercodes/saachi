@@ -27,7 +27,7 @@ You don't need to know any code. You copy two files and paste them into two boxe
 
 5. **Save.** Click **Save** at the bottom of the Import window.
 
-6. **Check it with Preview.** Click the **eye icon** in the top toolbar. The scroll animations, the counting 13, and the tilt with the cursor light only run in Preview and on the published site, not inside the editor canvas. Clicking inside the editor canvas selects things instead of clicking them.
+6. **Check it with Preview.** Click the **eye icon** in the top toolbar. The slideshow, the click-to-open section, the fade-ins, the counting 13, and the tilt with the cursor light only run in Preview and on the published site, not inside the editor canvas. In the editor, the slideshow shows only its first slide, and clicking selects things instead of clicking them.
 
 ## Good to know
 
@@ -35,5 +35,7 @@ You don't need to know any code. You copy two files and paste them into two boxe
 - **Only one person should edit the page at a time.** If the editor says someone else is "currently editing this page," wait until they're done, or one person's changes can overwrite the other's.
 - **Text and pictures:** after importing, click any `[Heading]`, `[Text]`, `[Caption]` and so on in the editor and type over it. For pictures, upload them in **Manage Files**, then swap the `images/photo1.jpg` to `images/photo4.jpg` paths for the paths the editor gives you.
 - **If a box turns black after importing,** the CSS probably contains a color written as `var(--something)`. The editor turns those into black. Colors must be plain codes like `#243e50`. See `CONTEXT.md`.
-- **If something looks squeezed into the middle of the page,** check that the first rule in `home.css` (`.container.it-is-set { max-width:100%; ... }`) made it in.
-- **Don't add new code that wasn't copied from a GitHub UI repo.** See `CODE-SOURCING-RULES.md`.
+- **If something looks squeezed into the middle of the page,** check that the `.container.it-is-set` rules near the top of `home.css` made it in.
+- **The `@source` notes in the code** (like `<!-- @source UV-SHRIMP -->`) record where each piece came from. They don't show on the page. The editor may drop them after import; the copies in this repo keep them.
+- **Keep this repo in sync with your text.** Text you type into the editor lives only on the NHD site. If you import `home.html` again later, it brings back the placeholders. Before re-importing, copy your text into `home.html` here first.
+- **Don't add new code that wasn't copied from a GitHub UI repo.** Every change has to pass the source screen. See `CODE-SOURCING-RULES.md`.

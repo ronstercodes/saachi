@@ -1,6 +1,6 @@
 # Project Context
 
-Background for anyone, person or AI, picking up this project. Read together with `CODE-SOURCING-RULES.md` (where code may come from) and `DESIGN.md` (how it must look).
+Background for anyone, person or AI, picking up this project. Read together with `CODE-SOURCING-RULES.md` (where code may come from, enforced by `tools/check_sources.py`) and `DESIGN.md` (how it must look).
 
 ## The project
 
@@ -30,28 +30,29 @@ From the NHD website rule summary:
 
 ## Lessons learned on the live site (2026-10-25)
 
-1. **Color variables turn black.** On import, the editor rewrote every `color:var(--x)` and `background-color:var(--x)` as `#000000`. Always write colors as hex codes.
-2. **Bootstrap class names clash.** Never use `container`, `card`, `row`, `col`, `btn`, `nav`, `navbar`, `badge`, `alert`, `modal`, `carousel-item`, `active`, `collapse`, `jumbotron` for your own elements.
-3. **Full width needs an override:** `.container.it-is-set{max-width:100%; padding-left:0; padding-right:0;}` (first rule in `home.css`).
-4. **Bootstrap margins:** reset margins on `p`, `label`, `figure`, `h1` to `h3` inside `#fm` where spacing matters.
-5. **Old scripts linger.** The old slideshow script kept running after the first redesign and added `.carousel-nav` dots. Replacing all the HTML in the Import window removes it; `#fm .carousel-nav{display:none}` hides any leftover.
-6. **A `<style>` block from a library can break on import.** `sal.css` was not pasted; plain state classes in `home.css` do the same job.
-7. **Only one person should edit at a time.** The editor shows "X is currently editing this page"; two people editing at once can overwrite each other.
+1. **Color variables turn black.** On import, the editor rewrote every `color:var(--x)` and `background-color:var(--x)` as `#000000`. Always write colors as hex codes. The screening tool checks this.
+2. **Bootstrap 4.3.1 is on every page; use it on purpose.** Its components (grid, jumbotron, carousel, card, collapse) and utility classes are the main building blocks, and its script runs the slideshow and the click-to-open section. But components from other libraries that reuse Bootstrap's class names (`container`, `card`, `tooltip` and so on) must be renamed, or Bootstrap's styles take over.
+3. **Full width needs an override:** Bootstrap's `.container` rules, copied and pointed at NHD's wrapper `.container.it-is-set` with `max-width:100%` and no side padding (first `BS-CSS` block in `home.css`).
+4. **Old scripts linger.** The first redesign left the old slideshow script running. Replacing all of the HTML in the Import window removes it.
+5. **Hide-until-scrolled CSS is a trap in the editor.** Libraries whose CSS hides content until their script runs (like sal.js) leave that content invisible in the editor canvas, where scripts don't run. ScrollOut only hides elements after its script marks them, so the editor shows everything.
+6. **Only one person should edit at a time.** The editor shows "X is currently editing this page"; two people editing at once can overwrite each other.
 
 ## Page structure (home.html)
 
-Everything sits inside `<div id="fm">`. Every CSS rule starts with `#fm` so nothing leaks into the rest of the site.
+Everything sits inside `<div id="fm" class="container-fluid px-0">`. Every CSS rule starts with `#fm`, except the NHD full-width override and the original `body` and `.auto-nav` rules.
 
-| Section | Class / id | Contents |
+| Section | Built from | Contents |
 |---|---|---|
-| Hero | `.hero` | Masthead (`.mast`: `#itsa` title, `#i2k2s` subtitle) and the slideshow (`#isl1`: 4 slides, 1 to 4 picker, captions). Fills the first screen. |
-| Opening | `.opening` | `#ihq6k` intro paragraph with drop cap; `#ipwhb` "13 Children died" box (counts up). |
-| Hover cards | `.reveal` | 4 cards: `[Heading]` slides away to show `[Text]`. |
-| Feature | `.feature` | Image with caption, plus a heading, text and a hover definition (`.tip`). |
-| Flip cards | `.flips` | 3 cards: image front, `[Text]` back. |
-| Quote | `.notes` | `[Quote]` and `[Source]` on ruled paper. |
-| Closing | `.closing` | Click-to-open `details` and the Thesis button `#irtjk` linking to `thesis_4`. |
-| Scripts | bottom of `home.html` | vanilla-tilt.js, sal.js, countUp.js (unchanged) and the setup script. |
+| First screen | `min-vh-100` wrapper | Jumbotron masthead (`#itsa` title, `#i2k2s` subtitle) and the Bootstrap carousel `#fmCarousel` (4 slides, arrows, indicators, captions) in the corner-bracket frame. |
+| Opening | grid row | `#ihq6k` intro paragraph; `#ipwhb` card with the 13 (`#fmCount`, counts up). |
+| Hover cards | grid row, dot pattern | 4 cards: `[Heading]` slides away to show `[Text]`. |
+| Feature | grid row | Figure with caption; heading, text and a hover definition (`.tip`). |
+| Flip cards | grid row | 3 cards: image front, `[Text]` back. |
+| Quote | ruled paper | Bootstrap blockquote: `[Quote]` and `[Source]`. |
+| Closing | grid row | Click-to-open accordion (`#fmAccordion`) and the Thesis button `#irtjk` linking to `thesis_4`. |
+| Scripts | bottom of `home.html` | vanilla-tilt.js, ScrollOut and countUp.js (unchanged), then one setup line for each, from their docs. |
+
+Every block is wrapped in `@source` markers naming its source. See `CODE-SOURCING-RULES.md` and `SOURCES.md`.
 
 ## Content rules
 

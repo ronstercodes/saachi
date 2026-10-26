@@ -1,0 +1,19 @@
+name: Source screen
+
+# Runs on every push and pull request. Fails if any site code in home.html or
+# home.css can't be traced to a registered GitHub source, if a pinned upstream
+# file doesn't match GitHub, or if SOURCES.md is out of date.
+on:
+  push:
+  pull_request:
+
+jobs:
+  screen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install tinycss2==1.5.1
+      - run: python3 tools/check_sources.py --verify-online --check-log

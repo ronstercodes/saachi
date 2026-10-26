@@ -1,0 +1,482 @@
+{
+  "license_allowlist": [
+    "MIT",
+    "Apache-2.0",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "ISC",
+    "CC0-1.0",
+    "Unlicense",
+    "CC-BY-3.0",
+    "CC-BY-4.0",
+    "own-work"
+  ],
+  "sources": [
+    {
+      "id": "ORIG",
+      "name": "Original NHD page export (student's own page)",
+      "repo": "ronstercodes/saachi",
+      "commit": "e80446fb096f071fefdd874080098fd9be0775d5",
+      "version": null,
+      "path": "original-export/nhd_html_css_10-25-2026.md",
+      "license": "own-work",
+      "author": "Ronuk Gadamsetty / project team",
+      "kind": "html-css",
+      "used_for": "Nav tag, title, subtitle, intro paragraph, 13 text, Thesis link, original id selectors and base rules",
+      "changes": [
+        "Nav tag, title, subtitle, intro paragraph, the 13 text, and the Thesis link reused as written",
+        "Title and subtitle given Bootstrap classes; \"13 Children died. America changed forever.\" split into three lines so the 13 can count up",
+        "Original rules kept: body and .auto-nav colors; #ihq6k rule reduced to padding, text-align and font-size (values changed)"
+      ],
+      "local_copy": "sources/upstream/ORIG/nhd_html_css_10-25-2026.md",
+      "sha256": "1d9df85f00b3e1169036228e5863ac069e568b4305762ce3ba902065c9dbfdb7"
+    },
+    {
+      "id": "BS-CSS",
+      "name": "Bootstrap 4.3.1 compiled CSS",
+      "repo": "twbs/bootstrap",
+      "commit": "8fa0d3010112dca5dd6dd501173415856001ba8b",
+      "version": "4.3.1",
+      "path": "dist/css/bootstrap.css",
+      "license": "MIT",
+      "author": "The Bootstrap Authors, Twitter Inc.",
+      "kind": "css",
+      "used_for": "Rules copied to restyle Bootstrap parts to DESIGN.md; NHD full-width override",
+      "changes": [
+        "Rules copied from bootstrap.css with selectors prefixed with #fm and values changed to DESIGN.md colors, sizes, radius 0 and hard print shadows",
+        ".container rule and its four @media max-width rules applied to NHD's wrapper .container.it-is-set with max-width 100% and no side padding, so the page fills the screen",
+        "body rule applied to #fm with Georgia, 19px, line height 1.7 and the ink and paper colors",
+        ".bg-light copied twice and renamed .bg-aged and .bg-mist for the two extra paper colors; .py-5 copied as .py-6 with 5rem",
+        ".blockquote-footer::before content emptied (removes the default dash)",
+        "Carousel arrow icon SVGs recolored from white to ink",
+        "z-index (from the .carousel-control rule) used on .rv so the dashed outline stays visible",
+        "prefers-reduced-motion rule for .carousel-item applied to everything in #fm with transition none"
+      ],
+      "local_copy": "sources/upstream/BS-CSS/bootstrap.css",
+      "sha256": "35fbb6dc3891aacaf1ffa07abec2344fdbc454aab533a2a03bcf93577eb7837b"
+    },
+    {
+      "id": "BS-GRID",
+      "name": "Bootstrap grid docs examples",
+      "repo": "twbs/bootstrap",
+      "commit": "8fa0d3010112dca5dd6dd501173415856001ba8b",
+      "version": "4.3.1",
+      "path": "site/docs/4.3/layout/grid.md",
+      "license": "CC-BY-3.0",
+      "author": "The Bootstrap Authors",
+      "kind": "html",
+      "used_for": "Page wrapper, section bands, rows and columns",
+      "changes": [
+        "Used for the #fm wrapper, the full-width bands (container-fluid), rows and columns, with Bootstrap utility classes for spacing and color"
+      ],
+      "local_copy": "sources/upstream/BS-GRID/grid.md",
+      "sha256": "aba0f43163972d935e84b4e33a2954f175d4eb839331a33c2d2fa6027cee3255"
+    },
+    {
+      "id": "BS-JUMBO",
+      "name": "Bootstrap jumbotron docs example",
+      "repo": "twbs/bootstrap",
+      "commit": "8fa0d3010112dca5dd6dd501173415856001ba8b",
+      "version": "4.3.1",
+      "path": "site/docs/4.3/components/jumbotron.md",
+      "license": "CC-BY-3.0",
+      "author": "The Bootstrap Authors",
+      "kind": "html",
+      "used_for": "Masthead",
+      "changes": [
+        "Fluid jumbotron used as the masthead with the hr from the first jumbotron example; paragraph replaced by the original h2 subtitle"
+      ],
+      "local_copy": "sources/upstream/BS-JUMBO/jumbotron.md",
+      "sha256": "ac1b7b9c48c0a09f49caf72473f1d2405d6ee39c6e6cd66ceec00781d67b42dc"
+    },
+    {
+      "id": "BS-CAROUSEL",
+      "name": "Bootstrap carousel docs examples (indicators, controls, captions)",
+      "repo": "twbs/bootstrap",
+      "commit": "8fa0d3010112dca5dd6dd501173415856001ba8b",
+      "version": "4.3.1",
+      "path": "site/docs/4.3/components/carousel.md",
+      "license": "CC-BY-3.0",
+      "author": "The Bootstrap Authors",
+      "kind": "html",
+      "used_for": "Slideshow (runs on Bootstrap's own script, already on every NHD page)",
+      "changes": [
+        "Indicators, controls and captions examples combined into one 4-slide carousel; caption heading removed; d-none d-md-block removed so captions show on phones",
+        "Also carries the four .bar spans of the UV-ZEBRA frame"
+      ],
+      "local_copy": "sources/upstream/BS-CAROUSEL/carousel.md",
+      "sha256": "38ecb86e8895d336bdab4f84cef2a4f337a24638e660f866e3e559467ba0618c"
+    },
+    {
+      "id": "BS-CARD",
+      "name": "Bootstrap card docs example",
+      "repo": "twbs/bootstrap",
+      "commit": "8fa0d3010112dca5dd6dd501173415856001ba8b",
+      "version": "4.3.1",
+      "path": "site/docs/4.3/components/card.md",
+      "license": "CC-BY-3.0",
+      "author": "The Bootstrap Authors",
+      "kind": "html",
+      "used_for": "\"13 Children died\" box",
+      "changes": [
+        "Basic card used for the 13 box; image and button removed; card-title and card-text hold the original text"
+      ],
+      "local_copy": "sources/upstream/BS-CARD/card.md",
+      "sha256": "3ddf07efc1303f3dd3cd3188cef8c675217f091efaf3b3cb03041420e7ef5ccf"
+    },
+    {
+      "id": "BS-FIGURE",
+      "name": "Bootstrap figure docs example",
+      "repo": "twbs/bootstrap",
+      "commit": "8fa0d3010112dca5dd6dd501173415856001ba8b",
+      "version": "4.3.1",
+      "path": "site/docs/4.3/content/figures.md",
+      "license": "CC-BY-3.0",
+      "author": "The Bootstrap Authors",
+      "kind": "html",
+      "used_for": "Feature image with caption",
+      "changes": [
+        "Figure example used for the feature image; rounded class removed"
+      ],
+      "local_copy": "sources/upstream/BS-FIGURE/figures.md",
+      "sha256": "28ebe6b0db65972862c0e0ae961d2b10ec4563d8962730a8ead88c70ef93e294"
+    },
+    {
+      "id": "BS-IMAGES",
+      "name": "Bootstrap images docs examples",
+      "repo": "twbs/bootstrap",
+      "commit": "8fa0d3010112dca5dd6dd501173415856001ba8b",
+      "version": "4.3.1",
+      "path": "site/docs/4.3/content/images.md",
+      "license": "CC-BY-3.0",
+      "author": "The Bootstrap Authors",
+      "kind": "html",
+      "used_for": "Every <img> element",
+      "changes": [
+        "img-fluid and img-thumbnail examples used for every image"
+      ],
+      "local_copy": "sources/upstream/BS-IMAGES/images.md",
+      "sha256": "a150faf5e53a3f5e4ba55a95c31046ed60115c2abebdb728c6b32124adebb2aa"
+    },
+    {
+      "id": "BS-TYPO",
+      "name": "Bootstrap typography docs examples",
+      "repo": "twbs/bootstrap",
+      "commit": "8fa0d3010112dca5dd6dd501173415856001ba8b",
+      "version": "4.3.1",
+      "path": "site/docs/4.3/content/typography.md",
+      "license": "CC-BY-3.0",
+      "author": "The Bootstrap Authors",
+      "kind": "html",
+      "used_for": "Headings and the blockquote",
+      "changes": [
+        "h3 heading, paragraphs and the blockquote example; cite title attribute removed"
+      ],
+      "local_copy": "sources/upstream/BS-TYPO/typography.md",
+      "sha256": "7beb8054c630e9b3a37a3a18380b79b0b405bd461167724732f273b3e1df2876"
+    },
+    {
+      "id": "BS-COLLAPSE",
+      "name": "Bootstrap collapse accordion docs example",
+      "repo": "twbs/bootstrap",
+      "commit": "8fa0d3010112dca5dd6dd501173415856001ba8b",
+      "version": "4.3.1",
+      "path": "site/docs/4.3/components/collapse.md",
+      "license": "CC-BY-3.0",
+      "author": "The Bootstrap Authors",
+      "kind": "html",
+      "used_for": "Click-to-open section",
+      "changes": [
+        "One card of the accordion example, closed by default (collapsed, aria-expanded false); button made full width with btn-block text-left"
+      ],
+      "local_copy": "sources/upstream/BS-COLLAPSE/collapse.md",
+      "sha256": "7704a6c51eac39e0f592345574754e0b883e8574bc023dcde9763e1495a70280"
+    },
+    {
+      "id": "UV-BULLFROG",
+      "name": "Diamond pattern",
+      "repo": "uiverse-io/galaxy",
+      "commit": "adbd2adde0a299a3956ea288fb444ec01891ca41",
+      "version": null,
+      "path": "Patterns/Javierrocadev_wicked-bullfrog-50.html",
+      "license": "MIT",
+      "author": "Javierrocadev",
+      "kind": "html-css",
+      "used_for": "Masthead background",
+      "changes": [
+        "Class .container renamed .pattern-diamond (Bootstrap clash); width and height removed; gradient recolored"
+      ],
+      "local_copy": "sources/upstream/UV-BULLFROG/Javierrocadev_wicked-bullfrog-50.html",
+      "sha256": "5b9ecacc4d7d685d985b2abf654da54154013f3f7dbd293a46cfe7a5f47ea7b7"
+    },
+    {
+      "id": "UV-FLUFFYBEAR",
+      "name": "Offset dot pattern",
+      "repo": "uiverse-io/galaxy",
+      "commit": "adbd2adde0a299a3956ea288fb444ec01891ca41",
+      "version": null,
+      "path": "Patterns/BadlyWrittenStylesheet_fluffy-bear-71.html",
+      "license": "MIT",
+      "author": "BadlyWrittenStylesheet",
+      "kind": "html-css",
+      "used_for": "Hover-card band background",
+      "changes": [
+        "Class .container renamed .pattern-dots; custom properties --bg and --size removed and their values written out (2.4rem, 1.2rem); width and height removed; dots recolored"
+      ],
+      "local_copy": "sources/upstream/UV-FLUFFYBEAR/BadlyWrittenStylesheet_fluffy-bear-71.html",
+      "sha256": "263410fe3cfe21f11f4df65b8082f133339788b53fd8e2cc53c4783c298f5802"
+    },
+    {
+      "id": "UV-QUAIL",
+      "name": "Ruled notebook paper",
+      "repo": "uiverse-io/galaxy",
+      "commit": "adbd2adde0a299a3956ea288fb444ec01891ca41",
+      "version": null,
+      "path": "Patterns/artvelog_splendid-quail-83.html",
+      "license": "MIT",
+      "author": "artvelog",
+      "kind": "html-css",
+      "used_for": "Quote band background",
+      "changes": [
+        "Class .container renamed .pattern-ruled; width and height removed; margin line moved to 8vw and recolored; line spacing 38px"
+      ],
+      "local_copy": "sources/upstream/UV-QUAIL/artvelog_splendid-quail-83.html",
+      "sha256": "b660f89f4fc75ae4e5343a87963bad05574b57058396567dfa3561b68a72423d"
+    },
+    {
+      "id": "UV-ZEBRA",
+      "name": "Corner-bracket button",
+      "repo": "uiverse-io/galaxy",
+      "commit": "adbd2adde0a299a3956ea288fb444ec01891ca41",
+      "version": null,
+      "path": "Buttons/Dashrath-Sharma_wet-zebra-95.html",
+      "license": "MIT",
+      "author": "Dashrath-Sharma",
+      "kind": "html-css",
+      "used_for": "Frame around the slideshow",
+      "changes": [
+        "button selector renamed .border-el-btn and put on the carousel; span:nth-child(1..4) renamed .b1 to .b4 and the shared span rule renamed .bar",
+        "color, outline, border, font-size, cursor, box-shadow (glow) and the :active rule removed; bars 4px; background recolored"
+      ],
+      "local_copy": "sources/upstream/UV-ZEBRA/Dashrath-Sharma_wet-zebra-95.html",
+      "sha256": "2c9794a9f7451ee1ced40c88e1edb666f3605b2ba1e102de4e8494b2549f68f6"
+    },
+    {
+      "id": "UV-BULLDOG",
+      "name": "Hover-reveal card",
+      "repo": "uiverse-io/galaxy",
+      "commit": "adbd2adde0a299a3956ea288fb444ec01891ca41",
+      "version": null,
+      "path": "Cards/alexruix_silent-bulldog-61.html",
+      "license": "MIT",
+      "author": "alexruix",
+      "kind": "html-css",
+      "used_for": "Row of 4 hover cards",
+      "changes": [
+        "Classes renamed: .container to .rv, .card to .rv-card, .card-hidden to .rv-hidden, .card-border to .rv-border (Bootstrap clash)",
+        "Fixed 190x254 size changed to full column width, 340px tall; button and its rules removed; colors and font sizes changed; radius 0"
+      ],
+      "local_copy": "sources/upstream/UV-BULLDOG/alexruix_silent-bulldog-61.html",
+      "sha256": "1416a618e872833d140c138b08c271eed4b31d8f3a8c69c8f3dc1c4658e18e1b"
+    },
+    {
+      "id": "UV-SHRIMP",
+      "name": "Flip card",
+      "repo": "uiverse-io/galaxy",
+      "commit": "adbd2adde0a299a3956ea288fb444ec01891ca41",
+      "version": null,
+      "path": "Cards/vamsidevendrakumar_soft-shrimp-94.html",
+      "license": "MIT",
+      "author": "vamsidevendrakumar",
+      "kind": "html-css",
+      "used_for": "Row of 3 flip cards",
+      "changes": [
+        "Classes renamed: .card to .flip-card, .card-inner to .flip-inner, .card-front to .flip-front, .card-back to .flip-back",
+        "Front holds an image; back holds [Text]; front border removed (Bootstrap border classes used instead); recolored; radius 0; 380px tall"
+      ],
+      "local_copy": "sources/upstream/UV-SHRIMP/vamsidevendrakumar_soft-shrimp-94.html",
+      "sha256": "58aeda61ccff323dee45762fdf0451e570b7f851097943df17f78d6ce2c015b9"
+    },
+    {
+      "id": "UV-WOLVERINE",
+      "name": "Pop-up tooltip",
+      "repo": "uiverse-io/galaxy",
+      "commit": "adbd2adde0a299a3956ea288fb444ec01891ca41",
+      "version": null,
+      "path": "Tooltips/Quezaquo_bitter-wolverine-27.html",
+      "license": "MIT",
+      "author": "Quezaquo",
+      "kind": "html-css",
+      "used_for": "Term definition in the feature text",
+      "changes": [
+        "Classes renamed: .container to .tip, .tooltip to .tip-box (Bootstrap clash), p to .tt",
+        "Looping bounce animation and its rule removed; width 260px, height auto; soft shadow replaced by a hard shadow; arrow moved to 20%; height removed from the last keyframe; recolored"
+      ],
+      "local_copy": "sources/upstream/UV-WOLVERINE/Quezaquo_bitter-wolverine-27.html",
+      "sha256": "dbb80bac632ba26379e0c57d154c05e4e9c18cf698cc87ad09be723addcc746a"
+    },
+    {
+      "id": "UV-SHEEP",
+      "name": "Flip-down button",
+      "repo": "uiverse-io/galaxy",
+      "commit": "adbd2adde0a299a3956ea288fb444ec01891ca41",
+      "version": null,
+      "path": "Buttons/mi-series_terrible-sheep-85.html",
+      "license": "MIT",
+      "author": "mi-series",
+      "kind": "html-css",
+      "used_for": "Thesis button",
+      "changes": [
+        "button selector renamed #irtjk (the original Thesis link); width 100%, line height 96px, Georgia sizes; recolored; hover text color #783b40"
+      ],
+      "local_copy": "sources/upstream/UV-SHEEP/mi-series_terrible-sheep-85.html",
+      "sha256": "f3f3920a0c9934f7b981c18f683307d6298e22a8c94d995a6b89d24ec87e9d1a"
+    },
+    {
+      "id": "UV-CATFISH",
+      "name": "Card icon image rule (object-fit: contain)",
+      "repo": "uiverse-io/galaxy",
+      "commit": "adbd2adde0a299a3956ea288fb444ec01891ca41",
+      "version": null,
+      "path": "Cards/Admin12121_little-catfish-39.html",
+      "license": "MIT",
+      "author": "Admin12121",
+      "kind": "html-css",
+      "used_for": "Slideshow images keep their shape at a fixed height",
+      "changes": [
+        "Image rule renamed .slide-img; values 100% wide, 56vh tall; object-fit contain kept"
+      ],
+      "local_copy": "sources/upstream/UV-CATFISH/Admin12121_little-catfish-39.html",
+      "sha256": "a4b9f84ce4a134b5efe7285a95429183bb6dda6e4900b3f0fda9d72d3f118910"
+    },
+    {
+      "id": "UV-DSHRIMP",
+      "name": "Card figure rule (object-fit: cover)",
+      "repo": "uiverse-io/galaxy",
+      "commit": "adbd2adde0a299a3956ea288fb444ec01891ca41",
+      "version": null,
+      "path": "Cards/ProgramaConPid_dangerous-shrimp-68.html",
+      "license": "MIT",
+      "author": "ProgramaConPid",
+      "kind": "html-css",
+      "used_for": "Flip card images fill the card",
+      "changes": [
+        "Rule renamed .flip-img; filter removed"
+      ],
+      "local_copy": "sources/upstream/UV-DSHRIMP/ProgramaConPid_dangerous-shrimp-68.html",
+      "sha256": "2b37a4df4137edfdf2cf53a6ed20a6786abe93f7b85b7c7feab990466a07ef14"
+    },
+    {
+      "id": "JS-TILT",
+      "name": "vanilla-tilt.js (minified build)",
+      "repo": "micku7zu/vanilla-tilt.js",
+      "commit": "48f4ee931d4d91dcdd2f91803db67a9f3a16587e",
+      "version": "1.8.1",
+      "path": "dist/vanilla-tilt.min.js",
+      "license": "MIT",
+      "author": "Sergiu Sandor (micku7zu)",
+      "kind": "js-exact",
+      "used_for": "3D tilt and cursor light",
+      "changes": [
+        "None. Pasted unchanged."
+      ],
+      "local_copy": "sources/upstream/JS-TILT/vanilla-tilt.min.js",
+      "sha256": "de6fa8d3f40dbae2726a72f7d1ae46bb0588267af05355bef1d128f737f4a282"
+    },
+    {
+      "id": "EX-TILT",
+      "name": "vanilla-tilt.js README usage examples",
+      "repo": "micku7zu/vanilla-tilt.js",
+      "commit": "48f4ee931d4d91dcdd2f91803db67a9f3a16587e",
+      "version": "1.8.1",
+      "path": "README.md",
+      "license": "MIT",
+      "author": "Sergiu Sandor (micku7zu)",
+      "kind": "js-example",
+      "used_for": "Starting the tilt on .js-tilt elements with options",
+      "changes": [
+        "VanillaTilt.init on .js-tilt elements with options from the README options list: max 6, speed 700, perspective 1100, scale 1.02, glare true, max-glare 0.5, gyroscope false"
+      ],
+      "local_copy": "sources/upstream/EX-TILT/README.md",
+      "sha256": "6d86dc3b212777c73138079f72931b449fc1209f7e535c880987217197f04ba1"
+    },
+    {
+      "id": "JS-SCROLLOUT",
+      "name": "ScrollOut (minified build)",
+      "repo": "scroll-out/scroll-out",
+      "commit": "b5d1edca04a85d9b28ce2081096f0e29a8855459",
+      "version": "2.2.12",
+      "path": "dist/scroll-out.min.js",
+      "license": "MIT",
+      "author": "Christopher Wallis (notoriousb1t)",
+      "kind": "js-exact",
+      "used_for": "Scroll reveal",
+      "changes": [
+        "None. Pasted unchanged."
+      ],
+      "local_copy": "sources/upstream/JS-SCROLLOUT/scroll-out.min.js",
+      "sha256": "2a7c9a53c0897113117a83a59eab061568726d7a8a067dee3cee16f836457874"
+    },
+    {
+      "id": "EX-SCROLLOUT",
+      "name": "ScrollOut guide (CSS and usage examples)",
+      "repo": "scroll-out/scroll-out.github.io",
+      "commit": "e9543680a3467aa4e9c22a815177e1d86a51ea53",
+      "version": null,
+      "path": "docs/guide.md",
+      "license": "MIT",
+      "author": "Christopher Wallis (notoriousb1t)",
+      "kind": "js-example",
+      "used_for": "Starting ScrollOut and the fade CSS for [data-scroll]",
+      "changes": [
+        "ScrollOut called with the documented once option; the guide's fade CSS for [data-scroll] prefixed with #fm"
+      ],
+      "local_copy": "sources/upstream/EX-SCROLLOUT/guide.md",
+      "sha256": "8f038ad11158c7de61b2ecb3b01646eb0686d98c5c0b8cc6a9aadfb4166031bc"
+    },
+    {
+      "id": "JS-COUNTUP",
+      "name": "countUp.js (UMD build)",
+      "repo": "inorganik/countUp.js",
+      "commit": "a47732056085af3e0e81374db71e088dddf17362",
+      "version": "2.10.1",
+      "path": "dist/countUp.umd.js",
+      "license": "MIT",
+      "author": "Jamie Perkins (inorganik)",
+      "kind": "js-exact",
+      "used_for": "Counting number",
+      "changes": [
+        "None. Pasted unchanged."
+      ],
+      "local_copy": "sources/upstream/JS-COUNTUP/countUp.umd.js",
+      "sha256": "2b08353ed1cd319ac41a79d74cd5508855ce33fd14d981997196b7b418cb4225"
+    },
+    {
+      "id": "EX-COUNTUP",
+      "name": "countUp.js README usage examples",
+      "repo": "inorganik/countUp.js",
+      "commit": "a47732056085af3e0e81374db71e088dddf17362",
+      "version": "2.10.1",
+      "path": "README.md",
+      "license": "MIT",
+      "author": "Jamie Perkins (inorganik)",
+      "kind": "js-example",
+      "used_for": "Starting the count on the 13",
+      "changes": [
+        "UMD usage example with target fmCount, end value 13, and the documented autoAnimate, autoAnimateOnce and duration options"
+      ],
+      "local_copy": "sources/upstream/EX-COUNTUP/README.md",
+      "sha256": "7b940f31a9bb0f8e05c77ea3246464936a57d5f6d39f6acc2981f7a7e0e8355f"
+    }
+  ],
+  "infrastructure": [
+    "tools/check_sources.py (the screening tool), .github/workflows/source-screen.yml and tools/hooks/pre-commit were written by Claude (Anthropic) on 2026-10-25. They check the site code; they are not part of the site.",
+    "The layout and design decisions (which sources to combine, colors, sizes) were chosen by Claude working with the student."
+  ],
+  "unsourced_requests": [
+    "2026-10-25: Drop cap on the intro paragraph (DESIGN.md). No GitHub UI source found; removed.",
+    "2026-10-25: Masthead diamond ornament and double rules around the title. Replaced by the jumbotron hr.",
+    "2026-10-25: Large decorative quotation mark before the quote. Removed.",
+    "2026-10-25: Turning the tilt off for visitors with reduced motion turned on. The library has no documented option for it; reduced motion only turns off CSS transitions."
+  ]
+}
