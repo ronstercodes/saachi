@@ -1,6 +1,6 @@
 # Project Context
 
-Background for anyone, person or AI, picking up this project. Read together with `CODE-SOURCING-RULES.md` (where code may come from, enforced by `tools/check_sources.py`) and `DESIGN.md` (how it must look).
+Background for anyone, person or AI, picking up this project. Read together with `EDITOR-FORMAT.md` (how the code must be written, enforced by `tools/check_format.py`) and `HOW-TO-PASTE.md`.
 
 ## The project
 
@@ -15,23 +15,25 @@ Background for anyone, person or AI, picking up this project. Read together with
 From the NHD website rule summary:
 - The site must be built in NHD WebCentral by the student ("Another person may show you how to use the editor, but you must build yourself").
 - The student must be the sole author. Reasonable help from others is allowed.
-- **Everything taken from others must be credited.** Not crediting it counts as plagiarism. This is why `SOURCES.md` exists: credit every library and component in the annotated bibliography.
+- **Everything taken from others must be credited.** Not crediting it counts as plagiarism. Credit the AI help in the annotated bibliography (see below).
 - Code doesn't count toward the word limit.
 - Check the current NHD Rule Book and ask the teacher or contest coordinator about outside code and AI use.
 
 ## Teacher approval (2026-10-25)
 
 The teacher was asked about Rule 10 (Reasonable Help) and approved both of these, on the condition that each is credited:
-- **Open source components and libraries** (everything listed in the Summary table of `SOURCES.md`).
+- **Open source components and libraries** (used in the earlier version, now in `archive/sourced-version/`).
 - **AI help with the code** (Claude, by Anthropic), with a citation saying the AI tool helped with the code.
+
+- **Editor-format code** (2026-10-25): code written to match the editor's own format so the student can edit all of it by hand. Approved because it is editable and is the kind of page someone could build in the editor without AI. See `EDITOR-FORMAT.md`.
 
 AI help covers code only. The research, text, captions and images stay the student's own. Keep a copy of the teacher's reply (screenshot or email) with the project files in case a judge asks.
 
 ### Citing it in the annotated bibliography
 
 Write the annotation under each entry in your own words.
-- **AI tool:** Anthropic. *Claude*. AI assistant. Used October 2026 to help find, adapt and assemble the HTML and CSS for the website's home page design. https://claude.ai
-- **Code sources:** one entry for each project in the Summary table of `SOURCES.md` (Bootstrap, Uiverse.io galaxy, vanilla-tilt.js, ScrollOut, countUp.js), giving the author, name, version, license and GitHub link shown there.
+- **AI tool:** Anthropic. *Claude*. AI assistant. Used October 2026 to help write the HTML and CSS for the website's home page design. https://claude.ai
+- **Code sources:** the current page uses no outside libraries or components. If any are added later, cite each one.
 
 ## How the NHD editor works
 
@@ -44,37 +46,23 @@ Write the annotation under each entry in your own words.
 
 ## Lessons learned on the live site (2026-10-25)
 
-1. **Color variables turn black.** On import, the editor rewrote every `color:var(--x)` and `background-color:var(--x)` as `#000000`. Always write colors as hex codes. The screening tool checks this.
-2. **Bootstrap 4.3.1 is on every page; use it on purpose.** Its components (grid, jumbotron, carousel, card, collapse) and utility classes are the main building blocks, and its script runs the slideshow and the click-to-open section. But components from other libraries that reuse Bootstrap's class names (`container`, `card`, `tooltip` and so on) must be renamed, or Bootstrap's styles take over.
-3. **Full width needs an override:** Bootstrap's `.container` rules, copied and pointed at NHD's wrapper `.container.it-is-set` with `max-width:100%` and no side padding (first `BS-CSS` block in `home.css`).
-4. **Old scripts linger.** The first redesign left the old slideshow script running. Replacing all of the HTML in the Import window removes it.
-5. **Hide-until-scrolled CSS is a trap in the editor.** Libraries whose CSS hides content until their script runs (like sal.js) leave that content invisible in the editor canvas, where scripts don't run. ScrollOut only hides elements after its script marks them, so the editor shows everything.
-6. **Only one person should edit at a time.** The editor shows "X is currently editing this page"; two people editing at once can overwrite each other.
+1. **Color variables turn black.** On import, the editor rewrote every `color:var(--x)` and `background-color:var(--x)` as `#000000`. Always write colors as hex codes.
+2. **Bootstrap 4.3.1 is on every page.** Its styles can affect plain tags (margins on `p` and headings), so set margins and padding on each element's own id rule.
+3. **Old scripts linger.** Replacing all of the HTML in the Import window removes them.
+4. **Only one person should edit at a time.** The editor shows "X is currently editing this page"; two people editing at once can overwrite each other.
 
 ## Page structure (home.html)
 
-Everything sits inside `<div id="fm" class="container-fluid px-0">`. Every CSS rule starts with `#fm`, except the NHD full-width override and the original `body` and `.auto-nav` rules.
-
-| Section | Built from | Contents |
-|---|---|---|
-| First screen | `min-vh-100` wrapper | Jumbotron masthead (`#itsa` title, `#i2k2s` subtitle) and the Bootstrap carousel `#fmCarousel` (4 slides, arrows, indicators, captions) in the corner-bracket frame. |
-| Opening | grid row | `#ihq6k` intro paragraph; `#ipwhb` card with the 13 (`#fmCount`, counts up). |
-| Hover cards | grid row, dot pattern | 4 cards: `[Heading]` slides away to show `[Text]`. |
-| Feature | grid row | Figure with caption; heading, text and a hover definition (`.tip`). |
-| Flip cards | grid row | 3 cards: image front, `[Text]` back. |
-| Quote | ruled paper | Bootstrap blockquote: `[Quote]` and `[Source]`. |
-| Closing | grid row | Click-to-open accordion (`#fmAccordion`) and the Thesis button `#irtjk` linking to `thesis_4`. |
-| Scripts | bottom of `home.html` | vanilla-tilt.js, ScrollOut and countUp.js (unchanged), then one setup line for each, from their docs. |
-
-Every block is wrapped in `@source` markers naming its source. See `CODE-SOURCING-RULES.md` and `SOURCES.md`.
+Plain editor blocks, each styled by its own id in `home.css`, top to bottom: nav tag, title band (`#itsa`, `#i2k2s`), slideshow (`#isl1`, the editor's own carousel and script) with caption, intro text (`#ihq6k`) beside the 13 box (`#ipwhb`), image with heading and text (`#ir7ld`), three picture cards (`#ilv6g`), quote (`#ix0cr`), and the Thesis button (`#irtjk`, links to `thesis_4`).
 
 ## Content rules
 
 - The page text is the student's own. Placeholders are in square brackets: `[Heading]`, `[Text]`, `[Caption]`, `[Caption / credit]`, `[Quote]`, `[Source]`, `[Term]`, `[Definition]`, `[Image description]`.
-- New images use `images/photo1.jpg` to `images/photo4.jpg` as placeholders; replace them with the paths from Manage Files.
+- New images use `../90886777/uploaded/[your-image].png` as a placeholder; replace it with the path from Manage Files.
 - Slideshow images already uploaded: `../90886777/uploaded/Screenshot_2026-10-17_at_1_49_31_PM_1.png`, `..._1_49_37_PM.png`, `..._1_49_43_PM.png`, `Screenshot_2026-10-18_at_2_22_49_PM.png`.
 
-## Files in docs/
+## Files in docs/ and archive/
 
-- `docs/nhd-web-editor-instructions.md`: the original instruction file for writing code for the NHD editor. Note: it says there is no place for JavaScript. That turned out to be wrong for the published site (see "Scripts" above), but its other rules still apply.
 - `docs/images/`: screenshots of the editor and the Import button.
+- `archive/nhd-web-editor-instructions.md`: the first instruction file for writing NHD editor code (superseded by `EDITOR-FORMAT.md`).
+- `archive/sourced-version/`: the earlier version built only from copied Bootstrap and Uiverse code, with its source log and checker.

@@ -1,20 +1,15 @@
 # Instructions for AI assistants
 
-**Copy, don't write.** Read `CODE-SOURCING-RULES.md` first and follow it exactly. The only new code allowed is small, hand-typeable AI glue inside `@source AI` blocks, within the limits in that file.
-
 Before changing anything in this repository, read these files in order:
 
-1. `CODE-SOURCING-RULES.md`: code may only be copied from a licensed public GitHub UI/UX source (or the student's original page), changed only in the allowed ways, wrapped in `@source` markers, and registered in `sources/registry.json`.
-2. `CONTEXT.md`: project background and how the NHD WebCentral editor behaves (hex colors only, Bootstrap 4.3.1 is on every page, everything scoped under `#fm`).
-3. `DESIGN.md`: the "1901 Apothecary Broadsheet" style every change must follow.
-4. `HOW-TO-PASTE.md`: how the user gets the code into the editor. Explain changes in plain language; the user doesn't write code.
+1. `EDITOR-FORMAT.md`: the page code must match the NHD WebCentral editor's own format exactly (editor style ids, one rule per id, no custom classes, comments or animations), so the student can edit every part by hand in the editor.
+2. `CONTEXT.md`: project background, the teacher's approvals, and how the NHD editor behaves.
+3. `HOW-TO-PASTE.md`: how the user gets the code into the editor. Explain changes in plain language; the user doesn't write code.
 
-Before every commit, run:
+Before every commit, run `python3 tools/check_format.py`. It must print "Format check passed". Never weaken the checker to make a change pass.
 
-```
-python3 tools/check_sources.py --write-log
-```
-
-It must print "Source screen passed". Never weaken, bypass or edit the screening tool to make a change pass. If something can't be sourced, leave it out and add it to `unsourced_requests` in `sources/registry.json`.
+AI help with the code must be credited in the annotated bibliography (see `CONTEXT.md`); don't remove that note.
 
 Never write the page's text content; use bracketed placeholders such as `[Text]`. Never use em dashes or en dashes in anything you write for this user.
+
+The earlier sourced-only version (Bootstrap and Uiverse components, source registry and checker) is kept in `archive/sourced-version/` for reference only.
